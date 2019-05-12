@@ -1,0 +1,135 @@
+/* Author:  Molly-Kay Miller
+Date Written:  Tuesday, May 7, 2019
+This is the Spring 2019 WEB-115-3221 Final Practical Project;
+Intended to work on through Summer 2019 and beyond;
+Using new text editor Visual Studio Code; 
+https://github.com/m1mollykay/https-github.com-web115-practical-final-mkm-web-115-final.git */
+
+<!DOCTYPE html>
+/* html5-boilerplate to start this app */
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>WEB-115 Final Practical Project</title>
+        <meta name="description" content="">
+        /* To make the website responsive to adjust to different sized devices */
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="">
+    </head>
+
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        
+        /* Integrity allows the browsers to check the source code to be sure
+        that the code is not loaded if the source is manipulated */
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSF1Bw8HfCJo=" crossorigin="anonymous" 
+         async defer>
+        </script>
+
+var menuItems = document.getElementsByTagName("LI");
+
+buildMenu();
+
+
+
+buildMenu();
+  function buildMenu(){
+      var jResp = '';
+    
+        $.ajax({
+            url : 'https://nflarrest.com/api/v1/crime',
+            type : 'GET',
+            dataType:'json',
+            success : function(data) {         
+                
+                for(var i = 0; i < data.length; i++){
+                    $('#mainMenu').append('<li id="'+data[i].Category+'" class="menItem">'+data[i].Category+' ('+data[i].arrest_count+')</li>');
+                }
+                
+                $(".menItem").click(function(data){
+                  getInfo(this.id);
+                });
+                
+            },
+            error : function(request,error)
+            {
+                alert("Request: "+JSON.stringify(request));
+            }
+        });
+  }
+    
+
+function getInfo(focus){
+  
+      
+        $.ajax({
+            url : 'https://nflarrest.com/api/v1/crime/topPlayers/'+focus,
+            type : 'GET',
+            dataType:'json',
+            success : function(data) {         
+                
+                var itemInformation = '';
+                
+                for(var i = 0; i <data.length; i++)>{
+                    itemInformation = itemInformation + '<div id="'+data[i].Name+'" class="nameClick">'+data[i].Name+' ('+data[i].arrest_count+')</div>';
+                }
+                </data.length>
+                $('section').html(itemInformation);
+                
+                                $(".nameClick").click(function(data){
+                  getDetails(this.id);
+                });
+            },
+            error : function(request,error)
+            {
+                alert("Request: "+JSON.stringify(request));
+            }
+        });
+
+  
+}
+
+
+
+
+function getDetails(focus){
+  
+      
+        $.ajax({
+            url : 'https://nflarrest.com/api/v1/player/arrests/'+focus,
+            type : 'GET',
+            dataType:'json',
+            success : function(data) {         
+                
+                var itemInformation = '';
+                
+                itemInformation = itemInformation + '<p>'+data[0].Name+'</p>';
+                itemInformation = itemInformation + '<p>'+data[0].Position_name+'</p>';
+                itemInformation = itemInformation + '<p>'+data[0].Team_preferred_name+'</p>';
+                itemInformation = itemInformation + '<p>'+data[0].Description+'</p>';
+                itemInformation = itemInformation + '<p>'+data[0].Outcome+'</p>';
+                itemInformation = itemInformation + '<p>'+data[0].ArrestSeasonState+'</p>';
+              
+                
+                $('section').html(itemInformation);
+            },
+            error : function(request,error)
+            {
+                alert("Request: "+JSON.stringify(request));
+            }
+        });
+
+  
+}
+
+    </body>
+    
+</html>
+

@@ -1,0 +1,29 @@
+/* Author:  Molly-Kay Miller
+Date Written:  Tuesday, May 7, 2019
+This is the Spring 2019 WEB-115-3221 Final Practical Project;
+Intended to work on through Summer 2019 and beyond;
+Using new text editor Visual Studio Code; 
+https://github.com/m1mollykay/https-github.com-web115-practical-final-mkm-web-115-final.git */
+
+
+
+body{background-color: pink;}
+
+ /* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+	body{background-color: #F00;}
+ }
+ /* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+	body{background-color: #0F0;}
+}
+ /* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+	body{background-color: #00F;}
+}
+ /* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+	body{background-color: yellow;}
+}
+
+
